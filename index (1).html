@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Technocraft 3DP Cost Calculator</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        background: linear-gradient(135deg, #f5f0e6, #ffffff);
+        font-family: 'Share Tech Mono', monospace;
+        color: #2b2b2b;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        border: 2px solid #d6cfc2;
+        background: #f8f4ec;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        font-family: 'VT323', monospace;
+        font-size: 48px;
+        text-align: center;
+        margin-bottom: 0;
+        letter-spacing: 2px;
+    }
+
+    .subtitle {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 14px;
+        opacity: 0.7;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    label {
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #c9c1b3;
+        background: #fff;
+        font-family: 'Share Tech Mono', monospace;
+    }
+
+    .full {
+        grid-column: span 2;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
+        margin-top: 20px;
+        background: #d9d2c3;
+        border: none;
+        font-family: 'VT323', monospace;
+        font-size: 22px;
+        cursor: pointer;
+        letter-spacing: 2px;
+    }
+
+    button:hover {
+        background: #cbbfa9;
+    }
+
+    .output {
+        margin-top: 25px;
+        padding: 15px;
+        background: #fff;
+        border: 1px dashed #b9b0a2;
+        font-size: 18px;
+    }
+
+    .cassette {
+        width: 100%;
+        height: 60px;
+        background: repeating-linear-gradient(
+            90deg,
+            #e8dfcf,
+            #e8dfcf 10px,
+            #f5f0e6 10px,
+            #f5f0e6 20px
+        );
+        margin-bottom: 20px;
+        border: 1px solid #d6cfc2;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="cassette"></div>
+
+    <h1>TECHNOCRAFT 3DP</h1>
+    <div class="subtitle">retro fabrication cost terminal // v1.0</div>
+
+    <div class="grid">
+        <div>
+            <label>Material cost per gram ($)</label>
+            <input id="materialCost" type="number" value="0.05" />
+        </div>
+
+        <div>
+            <label>Print weight (grams)</label>
+            <input id="weight" type="number" value="100" />
+        </div>
+
+        <div>
+            <label>Print time (hours)</label>
+            <input id="time" type="number" value="5" />
+        </div>
+
+        <div>
+            <label>Machine cost per hour ($)</label>
+            <input id="machine" type="number" value="2" />
+        </div>
+
+        <div>
+            <label>Labor rate per hour ($)</label>
+            <input id="labor" type="number" value="15" />
+        </div>
+
+        <div>
+            <label>Markup multiplier (e.g. 1.5)</label>
+            <input id="markup" type="number" value="1.5" step="0.1" />
+        </div>
+
+        <div class="full">
+            <button onclick="calculate()">CALCULATE PRICE</button>
+        </div>
+    </div>
+
+    <div class="output" id="output">
+        TOTAL PRICE: --
+    </div>
+</div>
+
+<script>
+function calculate() {
+    const materialCost = parseFloat(document.getElementById('materialCost').value);
+    const weight = parseFloat(document.getElementById('weight').value);
+    const time = parseFloat(document.getElementById('time').value);
+    const machine = parseFloat(document.getElementById('machine').value);
+    const labor = parseFloat(document.getElementById('labor').value);
+    const markup = parseFloat(document.getElementById('markup').value);
+
+    const material = materialCost * weight;
+    const machineCost = machine * time;
+    const laborCost = labor * time;
+
+    const subtotal = material + machineCost + laborCost;
+    const total = subtotal * markup;
+
+    document.getElementById('output').innerHTML =
+        "TOTAL PRICE: $" + total.toFixed(2);
+}
+</script>
+
+</body>
+</html>
